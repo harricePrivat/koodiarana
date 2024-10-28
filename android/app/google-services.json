@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "647846580943",
+    "project_id": "koodiarana-b7bd5",
+    "storage_bucket": "koodiarana-b7bd5.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:647846580943:android:dd7e3999495443d8831dba",
+        "android_client_info": {
+          "package_name": "com.example.koodiarana"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCMpddRhRAy2eRFs_tAQoQ7GHEkUHCgn00"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
