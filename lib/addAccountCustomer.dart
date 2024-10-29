@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:koodiarana/delayed_animation.dart';
+import 'package:koodiarana/send_data.dart';
 import 'package:koodiarana/shadcn/DatePicker.dart';
 import 'package:koodiarana/shadcn/phoneNumber.dart';
 import 'package:shadcn_flutter/shadcn_flutter.dart' as shadcn_flutter;
@@ -13,9 +15,14 @@ class AddaccountCustomer extends StatefulWidget {
 
 class _AddaccountState extends State<AddaccountCustomer>
     with SingleTickerProviderStateMixin {
+  DateTime? dateTime;
   TextEditingController nom = TextEditingController();
   TextEditingController prenom = TextEditingController();
+  TextEditingController email = TextEditingController();
+  TextEditingController remdp = TextEditingController();
+  TextEditingController mdp = TextEditingController();
   shadcn_flutter.PhoneNumber? phoneNumber;
+  SendData sendData = SendData();
 
   @override
   void initState() {
@@ -53,7 +60,13 @@ class _AddaccountState extends State<AddaccountCustomer>
                             shadcn_flutter.PrimaryButton(
                                 child: const Text('Suivant'),
                                 onPressed: () {
-                                  controller.nextStep();
+                                  (nom.text.trim() != "" &&
+                                          dateTime != null &&
+                                          prenom.text.trim() != "")
+                                      ? controller.nextStep()
+                                      : Fluttertoast.showToast(
+                                          msg:
+                                              "Veuillez remplir tous les champs");
                                 }),
                           ],
                           child: SizedBox(
@@ -77,9 +90,14 @@ class _AddaccountState extends State<AddaccountCustomer>
                                     style: shadcn_flutter.TextStyle(
                                         fontWeight: FontWeight.w600),
                                   ),
-                                  const Padding(
-                                    padding: EdgeInsets.all(16.00),
-                                    child: Datepicker(),
+                                  Padding(
+                                    padding: const EdgeInsets.all(16.00),
+                                    child: Datepicker(
+                                      dateTime: dateTime,
+                                      onValueChanged: (value) {
+                                        dateTime = value;
+                                      },
+                                    ),
                                   )
                                 ],
                               )),
@@ -107,7 +125,12 @@ class _AddaccountState extends State<AddaccountCustomer>
                               shadcn_flutter.PrimaryButton(
                                   child: const Text('Suivant'),
                                   onPressed: () {
-                                    controller.nextStep();
+                                    (email.text.trim() != "" &&
+                                            phoneNumber!.value!.trim() != "")
+                                        ? controller.nextStep()
+                                        : Fluttertoast.showToast(
+                                            msg:
+                                                "Veuillez remplir tous les champs");
                                   }),
                             ],
                             child: SizedBox(
@@ -119,6 +142,7 @@ class _AddaccountState extends State<AddaccountCustomer>
                                 children: [
                                   const Text('Votre adrresse e-mail:'),
                                   shadcn_flutter.TextField(
+                                    controller: email,
                                     useNativeContextMenu: true,
                                     placeholder: '@gmail.com',
                                     style:
@@ -130,6 +154,9 @@ class _AddaccountState extends State<AddaccountCustomer>
                                   const Text('Votre numéro de téléphone:'),
                                   Phonenumber(
                                     phoneNumber: phoneNumber,
+                                    onPhoneNumberChanged: (value) {
+                                      phoneNumber = value;
+                                    },
                                   ),
                                 ],
                               ),
@@ -153,7 +180,37 @@ class _AddaccountState extends State<AddaccountCustomer>
                               shadcn_flutter.PrimaryButton(
                                   child: const Text('Terminer'),
                                   onPressed: () {
-                                    controller.nextStep();
+                                    // phoneNumber = Phonenumber().getNumber();
+                                    //controller.nextStep();
+                                    if (mdp.text != '' && remdp.text != '') {
+                                      if (remdp.text == mdp.text) {
+                                        sendData.goData(
+                                            "http://192.168.43.41:9999/register",
+                                            {
+                                              "nom": nom.text,
+                                              "prenom": prenom.text,
+                                              "date_naissance":
+                                                  dateTime.toString(),
+                                              "email": email.text,
+                                              "num": phoneNumber!.value!,
+                                              "password": mdp.text
+                                            });
+                                      } else {
+                                        Fluttertoast.showToast(
+                                            msg: "Verifiez votre mot de passe",
+                                            toastLength: Toast.LENGTH_LONG);
+                                      }
+                                    } else {
+                                      Fluttertoast.showToast(
+                                          msg: "Remplir tous les champs",
+                                          toastLength: Toast.LENGTH_LONG);
+                                    }
+                                    // print(
+                                    //     "votre date de naissance : $dateTime");
+                                    // print("Votre nom: ${nom.text}");
+                                    // print("Votre prenom: ${prenom.text}");
+                                    // print("Votre email: ${email.text}");
+                                    // print("Votre num: $phoneNumber");
                                   }),
                             ],
                             child: SizedBox(
@@ -162,47 +219,53 @@ class _AddaccountState extends State<AddaccountCustomer>
                               child: Column(
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
-                                  const shadcn_flutter.Text(
-                                      'Code de verification numero telephone: '),
-                                  shadcn_flutter.InputOTP(
-                                    children: [
-                                      shadcn_flutter.InputOTPChild.character(
-                                          allowDigit: true),
-                                      shadcn_flutter.InputOTPChild.character(
-                                          allowDigit: true),
-                                      shadcn_flutter.InputOTPChild.character(
-                                          allowDigit: true),
-                                      shadcn_flutter.InputOTPChild.separator,
-                                      shadcn_flutter.InputOTPChild.character(
-                                          allowDigit: true),
-                                      shadcn_flutter.InputOTPChild.character(
-                                          allowDigit: true),
-                                      shadcn_flutter.InputOTPChild.character(
-                                          allowDigit: true),
-                                    ],
-                                  ),
-                                  const SizedBox(
-                                    height: 16.00,
-                                  ),
-                                  const shadcn_flutter.Text(
-                                      'Code de verification adresse e-mail: '),
-                                  shadcn_flutter.InputOTP(
-                                    children: [
-                                      shadcn_flutter.InputOTPChild.character(
-                                          allowDigit: true),
-                                      shadcn_flutter.InputOTPChild.character(
-                                          allowDigit: true),
-                                      shadcn_flutter.InputOTPChild.character(
-                                          allowDigit: true),
-                                      shadcn_flutter.InputOTPChild.separator,
-                                      shadcn_flutter.InputOTPChild.character(
-                                          allowDigit: true),
-                                      shadcn_flutter.InputOTPChild.character(
-                                          allowDigit: true),
-                                      shadcn_flutter.InputOTPChild.character(
-                                          allowDigit: true),
-                                    ],
-                                  ),
+                                  inputField(mdp, "Votre mot de passe:",
+                                      "*******", color),
+                                  inputField(
+                                      remdp,
+                                      "Confirmation de votre mot de passe:",
+                                      "*******",
+                                      color),
+
+                                  // shadcn_flutter.InputOTP(
+                                  //   children: [
+                                  //     shadcn_flutter.InputOTPChild.character(
+                                  //         allowDigit: true),
+                                  //     shadcn_flutter.InputOTPChild.character(
+                                  //         allowDigit: true),
+                                  //     shadcn_flutter.InputOTPChild.character(
+                                  //         allowDigit: true),
+                                  //     shadcn_flutter.InputOTPChild.separator,
+                                  //     shadcn_flutter.InputOTPChild.character(
+                                  //         allowDigit: true),
+                                  //     shadcn_flutter.InputOTPChild.character(
+                                  //         allowDigit: true),
+                                  //     shadcn_flutter.InputOTPChild.character(
+                                  //         allowDigit: true),
+                                  //   ],
+                                  // ),
+                                  // const SizedBox(
+                                  //   height: 16.00,
+                                  // ),
+                                  // const shadcn_flutter.Text(
+                                  //     'Code de verification adresse e-mail: '),
+                                  // shadcn_flutter.InputOTP(
+                                  //   children: [
+                                  //     shadcn_flutter.InputOTPChild.character(
+                                  //         allowDigit: true),
+                                  //     shadcn_flutter.InputOTPChild.character(
+                                  //         allowDigit: true),
+                                  //     shadcn_flutter.InputOTPChild.character(
+                                  //         allowDigit: true),
+                                  //     shadcn_flutter.InputOTPChild.separator,
+                                  //     shadcn_flutter.InputOTPChild.character(
+                                  //         allowDigit: true),
+                                  //     shadcn_flutter.InputOTPChild.character(
+                                  //         allowDigit: true),
+                                  //     shadcn_flutter.InputOTPChild.character(
+                                  //         allowDigit: true),
+                                  //   ],
+                                  // ),
                                 ],
                               ),
                             ),

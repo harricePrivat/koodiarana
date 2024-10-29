@@ -12,6 +12,7 @@ class AddaccountWork extends StatefulWidget {
 
 class _AddaccountState extends State<AddaccountWork>
     with SingleTickerProviderStateMixin {
+  DateTime? dateTime;
   TextEditingController nom = TextEditingController();
   TextEditingController prenom = TextEditingController();
 
@@ -74,9 +75,11 @@ class _AddaccountState extends State<AddaccountWork>
                                     style: shadcn_flutter.TextStyle(
                                         fontWeight: FontWeight.w600),
                                   ),
-                                  const Padding(
-                                    padding: EdgeInsets.all(16.00),
-                                    child: Datepicker(),
+                                  Padding(
+                                    padding: const EdgeInsets.all(16.00),
+                                    child: Datepicker(
+                                      dateTime: dateTime,
+                                    ),
                                   )
                                 ],
                               )),

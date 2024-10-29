@@ -1,4 +1,5 @@
 import 'package:http/http.dart' as http;
+import 'dart:convert';
 
 class SendData {
   SendData();
@@ -6,7 +7,7 @@ class SendData {
     return await http.post(
       Uri.parse(url),
       headers: {'Content-Type': 'application/json'},
-      body: object,
+      body: jsonEncode(object),
     );
   }
 }

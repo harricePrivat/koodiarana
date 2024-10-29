@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:shadcn_ui/shadcn_ui.dart';
 import 'shadcn/phoneNumber.dart';
+import 'package:shadcn_flutter/shadcn_flutter.dart' as shadcn_flutter;
 
 class ForgotPassword extends StatefulWidget {
   const ForgotPassword({super.key});
@@ -10,6 +11,7 @@ class ForgotPassword extends StatefulWidget {
 }
 
 class _ForgotPasswordState extends State<ForgotPassword> {
+  shadcn_flutter.PhoneNumber? phoneNumber;
   @override
   Widget build(BuildContext context) {
     final themeText = Theme.of(context).textTheme;
@@ -33,7 +35,8 @@ class _ForgotPasswordState extends State<ForgotPassword> {
                 ),
                 Text('Entrez votre numero de telephone',
                     style: themeText.displaySmall),
-                Phonenumber(),
+                Phonenumber(
+                    phoneNumber: phoneNumber, onPhoneNumberChanged: (value) {}),
                 const SizedBox(
                   height: 16.00,
                 ),

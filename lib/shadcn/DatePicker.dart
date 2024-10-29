@@ -1,21 +1,23 @@
 import 'package:flutter/material.dart';
 import 'package:shadcn_flutter/shadcn_flutter.dart' as shadcn_flutter;
 
+// ignore: must_be_immutable
 class Datepicker extends StatefulWidget {
-  const Datepicker({super.key, wh});
+  DateTime? dateTime;
+  final ValueChanged<DateTime?>? onValueChanged;
+  Datepicker({super.key, required this.dateTime, this.onValueChanged});
 
   @override
   State<Datepicker> createState() => _DatapickerState();
 }
 
 class _DatapickerState extends State<Datepicker> {
-  DateTime? _value;
   @override
   Widget build(BuildContext context) {
     return Column(
       children: [
         shadcn_flutter.DatePicker(
-          value: _value,
+          value: widget.dateTime,
           dialogTitle: const shadcn_flutter.Text('Ajouter une date'),
           mode: shadcn_flutter.PromptMode.popover,
           stateBuilder: (date) {
@@ -25,9 +27,7 @@ class _DatapickerState extends State<Datepicker> {
             return shadcn_flutter.DateState.enabled;
           },
           onChanged: (value) {
-            setState(() {
-              _value = value;
-            });
+            widget.onValueChanged!(value);
           },
         ),
         const shadcn_flutter.Gap(16),

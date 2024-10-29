@@ -1,5 +1,4 @@
 import 'dart:async';
-import 'dart:convert';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:koodiarana/Provider.dart';
@@ -222,7 +221,7 @@ class _Login extends State<Login> with SingleTickerProviderStateMixin {
                     SendData sendData = SendData();
                     final response = await sendData.goData(
                         'http://192.168.43.41:3000/auth',
-                        jsonEncode({'name': "Brice", 'password': 'Brice'}));
+                        {'name': "Brice", 'password': 'Brice'});
                     if (response.statusCode == 200) {
                       print(response.body);
                     }
