@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:koodiarana/delayed_animation.dart';
 import 'package:koodiarana/send_data.dart';
+import 'package:koodiarana/services/verify_mail.dart';
 import 'package:koodiarana/shadcn/DatePicker.dart';
 import 'package:koodiarana/shadcn/phoneNumber.dart';
 import 'package:shadcn_flutter/shadcn_flutter.dart' as shadcn_flutter;
@@ -23,6 +24,7 @@ class _AddaccountState extends State<AddaccountCustomer>
   TextEditingController mdp = TextEditingController();
   shadcn_flutter.PhoneNumber? phoneNumber;
   SendData sendData = SendData();
+  VerifyMail verifyMail = VerifyMail();
 
   @override
   void initState() {
@@ -179,22 +181,28 @@ class _AddaccountState extends State<AddaccountCustomer>
                               ),
                               shadcn_flutter.PrimaryButton(
                                   child: const Text('Terminer'),
-                                  onPressed: () {
+                                  onPressed: () async {
                                     // phoneNumber = Phonenumber().getNumber();
                                     //controller.nextStep();
                                     if (mdp.text != '' && remdp.text != '') {
                                       if (remdp.text == mdp.text) {
-                                        sendData.goData(
-                                            "http://192.168.43.41:9999/register",
-                                            {
-                                              "nom": nom.text,
-                                              "prenom": prenom.text,
-                                              "date_naissance":
-                                                  dateTime.toString(),
-                                              "email": email.text,
-                                              "num": phoneNumber!.value!,
-                                              "password": mdp.text
-                                            });
+                                        await verifyMail.registerUser(
+                                            email.text, mdp.text);
+                                        bool emailVerified =
+                                            await verifyMail.isEmailVerified();
+                                        if (emailVerified) {
+                                          sendData.goData(
+                                              "http://192.168.43.41:9999/register",
+                                              {
+                                                "nom": nom.text,
+                                                "prenom": prenom.text,
+                                                "date_naissance":
+                                                    dateTime.toString(),
+                                                "email": email.text,
+                                                "num": phoneNumber!.value!,
+                                                "password": mdp.text
+                                              });
+                                        }
                                       } else {
                                         Fluttertoast.showToast(
                                             msg: "Verifiez votre mot de passe",
