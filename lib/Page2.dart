@@ -5,7 +5,7 @@ import 'dart:convert';
 import 'package:koodiarana/Provider.dart';
 import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:koodiarana/delayed_animation.dart';
-import 'ModelKoodiarana.dart';
+import 'Models/ModelKoodiarana.dart';
 import 'package:flutter_map/flutter_map.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:latlong2/latlong.dart';

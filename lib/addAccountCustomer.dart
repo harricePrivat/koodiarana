@@ -1,11 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:koodiarana/Models/model_user.dart';
+import 'package:koodiarana/Provider.dart';
+import 'package:koodiarana/check_verify_mail.dart';
 import 'package:koodiarana/delayed_animation.dart';
 import 'package:koodiarana/send_data.dart';
 import 'package:koodiarana/services/verify_mail.dart';
 import 'package:koodiarana/shadcn/DatePicker.dart';
 import 'package:koodiarana/shadcn/phoneNumber.dart';
+import 'package:provider/provider.dart';
 import 'package:shadcn_flutter/shadcn_flutter.dart' as shadcn_flutter;
+import 'dart:convert';
 
 class AddaccountCustomer extends StatefulWidget {
   const AddaccountCustomer({super.key});
@@ -186,23 +191,46 @@ class _AddaccountState extends State<AddaccountCustomer>
                                     //controller.nextStep();
                                     if (mdp.text != '' && remdp.text != '') {
                                       if (remdp.text == mdp.text) {
-                                        await verifyMail.registerUser(
-                                            email.text, mdp.text);
-                                        bool emailVerified =
-                                            await verifyMail.isEmailVerified();
-                                        if (emailVerified) {
-                                          sendData.goData(
-                                              "http://192.168.43.41:9999/register",
-                                              {
-                                                "nom": nom.text,
-                                                "prenom": prenom.text,
-                                                "date_naissance":
-                                                    dateTime.toString(),
-                                                "email": email.text,
-                                                "num": phoneNumber!.value!,
-                                                "password": mdp.text
-                                              });
+                                        ModelUser user = ModelUser(
+                                            nom: nom.text,
+                                            prenom: prenom.text,
+                                            dateDeNaissance:
+                                                dateTime.toString(),
+                                            email: email.text,
+                                            num: phoneNumber!.value!,
+                                            password: mdp.text);
+                                        Provider.of<UserVerify>(context,
+                                                listen: false)
+                                            .setUser(user);
+                                        final response = await sendData.goData(
+                                            "http://192.168.43.41:9999/verify-mail-account",
+                                            user.toJson());
+                                        if (response.statusCode == 200) {
+                                          final body =
+                                              jsonDecode(response.body);
+                                          if ("send_mail".compareTo(
+                                                  body['response']) ==
+                                              0) {
+                                            Navigator.pushReplacement(
+                                                context,
+                                                MaterialPageRoute(
+                                                    builder: (context) =>
+                                                        const CheckVerifyMail()));
+                                          }
+
+                                          //if("User already exist".compareTo(body[]))
                                         }
+                                        // sendData.goData(
+                                        //     "http://192.168.43.41:9999/register",
+                                        //     {
+                                        //       "nom": nom.text,
+                                        //       "prenom": prenom.text,
+                                        //       "date_naissance":
+                                        //           dateTime.toString(),
+                                        //       "email": email.text,
+                                        //       "num": phoneNumber!.value!,
+                                        //       "password": mdp.text
+                                        //     });
                                       } else {
                                         Fluttertoast.showToast(
                                             msg: "Verifiez votre mot de passe",

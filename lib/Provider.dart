@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'ModelKoodiarana.dart';
+import 'package:koodiarana/Models/model_user.dart';
+import 'Models/ModelKoodiarana.dart';
 import 'services/appCache.dart';
 import 'package:connectivity_plus/connectivity_plus.dart';
 
@@ -175,6 +176,18 @@ class CheckAnimation extends ChangeNotifier {
   void endChargement() {
     chargement = false;
     print('Voici le chargement de la fin $chargement');
+    notifyListeners();
+  }
+}
+
+class UserVerify extends ChangeNotifier {
+  ModelUser? user;
+  ModelUser getUser() {
+    return user!;
+  }
+
+  void setUser(ModelUser user) {
+    this.user = user;
     notifyListeners();
   }
 }

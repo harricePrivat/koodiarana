@@ -38,6 +38,7 @@ class Main extends StatelessWidget {
           ChangeNotifierProvider(create: (context) => CheckAnimation()),
           ChangeNotifierProvider(create: (context) => ManageLogin()),
           ChangeNotifierProvider(create: (context) => BottomWork()),
+          ChangeNotifierProvider(create: (context) => UserVerify())
         ],
         // child: shadcn_flutter.ShadcnApp(
         //   debugShowCheckedModeBanner: false,
