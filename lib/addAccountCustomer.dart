@@ -7,6 +7,7 @@ import 'package:koodiarana/delayed_animation.dart';
 import 'package:koodiarana/send_data.dart';
 import 'package:koodiarana/services/verify_mail.dart';
 import 'package:koodiarana/shadcn/DatePicker.dart';
+import 'package:koodiarana/shadcn/PasswordInput.dart';
 import 'package:koodiarana/shadcn/phoneNumber.dart';
 import 'package:provider/provider.dart';
 import 'package:shadcn_flutter/shadcn_flutter.dart' as shadcn_flutter;
@@ -255,13 +256,18 @@ class _AddaccountState extends State<AddaccountCustomer>
                               child: Column(
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
-                                  inputField(mdp, "Votre mot de passe:",
-                                      "*******", color),
-                                  inputField(
-                                      remdp,
-                                      "Confirmation de votre mot de passe:",
-                                      "*******",
-                                      color),
+                                  // inputField(mdp, "Votre mot de passe:",
+                                  //     "*******", color),
+                                  PasswordInput(controller: mdp),
+                                  const SizedBox(
+                                    height: 16.00,
+                                  ),
+                                  PasswordInput(controller: remdp),
+                                  // inputField(
+                                  //     remdp,
+                                  //     "Confirmation de votre mot de passe:",
+                                  //     "*******",
+                                  //     color),
 
                                   // shadcn_flutter.InputOTP(
                                   //   children: [
