@@ -28,6 +28,8 @@ class _Login extends State<Login> with SingleTickerProviderStateMixin {
   bool isLoginProcessWork = false;
   TabController? _tabController;
   DateTime? lastPressed;
+  TextEditingController mailNum = TextEditingController();
+  TextEditingController password = TextEditingController();
 
   @override
   void initState() {
@@ -200,7 +202,6 @@ class _Login extends State<Login> with SingleTickerProviderStateMixin {
 
   Widget formulaire(String title, String describe) {
     TextStyle style = const TextStyle(color: Colors.white);
-    TextEditingController controller = TextEditingController();
     return DelayedAnimation(
         delay: 300,
         child: Padding(
@@ -220,8 +221,8 @@ class _Login extends State<Login> with SingleTickerProviderStateMixin {
                   onPressed: () async {
                     SendData sendData = SendData();
                     final response = await sendData.goData(
-                        'http://192.168.43.41:3000/auth',
-                        {'name': "Brice", 'password': 'Brice'});
+                        'http://192.168.43.41:9999/login',
+                        {'mailNum': mailNum.text, 'mdp': password.text});
                     if (response.statusCode == 200) {
                       print(response.body);
                     }
@@ -252,16 +253,17 @@ class _Login extends State<Login> with SingleTickerProviderStateMixin {
               children: [
                 const SizedBox(height: 16),
                 ShadInputFormField(
+                  controller: mailNum,
                   cursorColor: Colors.white,
                   style: style,
-                  label: Text('Nom', style: style),
+                  label: Text('Mail ou Num', style: style),
                   placeholder: Text(
-                    'ex: Brice',
+                    'ex: @gmail.com ou 034...',
                     style: style,
                   ),
                 ),
                 const SizedBox(height: 8),
-                PasswordInput(controller: controller),
+                PasswordInput(controller: password),
                 const SizedBox(height: 16),
               ],
             ),

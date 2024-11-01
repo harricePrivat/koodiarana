@@ -18,7 +18,7 @@ class _PasswordInputState extends State<PasswordInput> {
     return ShadInputFormField(
       cursorColor: Colors.white,
       label: const Text('Mot de passe', style: TextStyle(color: Colors.white)),
-      //  controller: widget.controller,
+      controller: widget.controller,
       placeholder: const Text('*******'),
       obscureText: obscure,
       prefix: const Padding(
