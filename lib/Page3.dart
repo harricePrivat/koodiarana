@@ -118,13 +118,20 @@ class _Page3 extends State<Page3> {
                               ShadButton(
                                 child: const Text('Sauvegarder le changement'),
                                 onPressed: () {
-                                  manageReservation.changeDescription(
-                                      i, controller.text);
-                                  manageReservation.changeTime(i, _timeOfDay);
-                                  Fluttertoast.showToast(
-                                      msg: 'Modification réussie',
-                                      toastLength: Toast.LENGTH_SHORT);
-                                  Navigator.pop(context);
+                                  if (controller.text != "") {
+                                    manageReservation.changeDescription(
+                                        i, controller.text);
+                                    manageReservation.changeTime(i, _timeOfDay);
+                                    Fluttertoast.showToast(
+                                        msg: 'Modification réussie',
+                                        toastLength: Toast.LENGTH_SHORT);
+                                    Navigator.pop(context);
+                                  } else {
+                                    Fluttertoast.showToast(
+                                        msg:
+                                            "Ne pas laisser vide la description",
+                                        toastLength: Toast.LENGTH_LONG);
+                                  }
                                 },
                               ),
                             ],
