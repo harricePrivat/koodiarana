@@ -31,6 +31,10 @@ class _AddaccountState extends State<AddaccountCustomer>
   TextEditingController mdp = TextEditingController();
   shadcn_flutter.PhoneNumber? phoneNumber;
   SendData sendData = SendData();
+  final GlobalKey<FormBuilderFieldState> _textFieldNameKey =
+      GlobalKey<FormBuilderFieldState>();
+  final GlobalKey<FormBuilderFieldState> _textFieldLastNameKey =
+      GlobalKey<FormBuilderFieldState>();
 
   @override
   void initState() {
@@ -39,7 +43,6 @@ class _AddaccountState extends State<AddaccountCustomer>
 
   @override
   Widget build(BuildContext context) {
-    final color = Theme.of(context).primaryColor;
     final shadcn_flutter.StepperController controller =
         shadcn_flutter.StepperController();
     return Scaffold(
@@ -84,12 +87,15 @@ class _AddaccountState extends State<AddaccountCustomer>
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
                                   inputField(nom, 'Entrez votre nom:',
-                                      'ex: NARIVELO', color),
+                                      'ex: NARIVELO', _textFieldNameKey),
                                   const SizedBox(
-                                    height: 8.00,
+                                    height: 4.00,
                                   ),
-                                  inputField(prenom, 'Entrez votre prenom:',
-                                      'ex: Brice Privat', color),
+                                  inputField(
+                                      prenom,
+                                      'Entrez votre prenom:',
+                                      'ex: Brice Privat',
+                                      _textFieldLastNameKey),
                                   const SizedBox(
                                     height: 8.00,
                                   ),
@@ -340,22 +346,39 @@ class _AddaccountState extends State<AddaccountCustomer>
     );
   }
 
-  Widget inputField(TextEditingController nom, String label, String placeholder,
-      Color color) {
+  Widget inputField(
+    TextEditingController nom,
+    String label,
+    String placeholder,
+    GlobalKey<FormBuilderFieldState> key,
+  ) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        shadcn_flutter.Text(
-          label,
-          style: shadcn_flutter.TextStyle(
-              fontWeight: FontWeight.w600, color: color),
+        const SizedBox(
+          height: 4.00,
         ),
-        shadcn_flutter.TextField(
+        FormBuilderTextField(
+          key: key,
           controller: nom,
-          useNativeContextMenu: true,
-          placeholder: placeholder,
-          style: shadcn_flutter.TextStyle(color: color),
-        ),
+          autovalidateMode: AutovalidateMode.onUserInteraction,
+          name: "text",
+          decoration: InputDecoration(
+              labelText: label,
+              hintText: placeholder,
+              border:
+                  OutlineInputBorder(borderRadius: BorderRadius.circular(8))),
+          validator: FormBuilderValidators.required(
+              errorText: "Ce champ est obligatoire"),
+        )
+
+        // shadcn_flutter.TextField(
+        //   controller: nom,
+        //   useNativeContextMenu: true,
+        //   placeholder: placeholder,
+        //   style: shadcn_flutter.TextStyle(color: color),
+
+        // ),
       ],
     );
   }

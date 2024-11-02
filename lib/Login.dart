@@ -258,6 +258,7 @@ class _Login extends State<Login> with SingleTickerProviderStateMixin {
                   controller: mailNum,
                   name: "mailNum",
                   autovalidateMode: AutovalidateMode.onUserInteraction,
+                  style: const TextStyle(color: Colors.white),
                   decoration: const InputDecoration(
                     label: Text('Mail ou Numero de telephone',
                         style: TextStyle(color: Colors.white)),
