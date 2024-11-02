@@ -268,7 +268,7 @@ class _Login extends State<Login> with SingleTickerProviderStateMixin {
                   ),
                   validator: FormBuilderValidators.compose([
                     FormBuilderValidators.required(
-                        errorText: "Ce champ  est obligatoire")
+                        errorText: "Ce champ  est obligatoire"),
                   ]),
                 ),
                 const SizedBox(height: 16),
