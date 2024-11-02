@@ -273,7 +273,10 @@ class _Login extends State<Login> with SingleTickerProviderStateMixin {
                   ]),
                 ),
                 const SizedBox(height: 16),
-                PasswordInput(controller: password),
+                PasswordInput(
+                  controller: password,
+                  color: Colors.white,
+                ),
                 const SizedBox(height: 16),
               ],
             ),

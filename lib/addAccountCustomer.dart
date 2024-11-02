@@ -283,11 +283,16 @@ class _AddaccountState extends State<AddaccountCustomer>
                                 children: [
                                   // inputField(mdp, "Votre mot de passe:",
                                   //     "*******", color),
-                                  PasswordInput(controller: mdp),
+                                  PasswordInput(
+                                      controller: mdp,
+                                      color: Theme.of(context).primaryColor),
                                   const SizedBox(
                                     height: 16.00,
                                   ),
-                                  PasswordInput(controller: remdp),
+                                  PasswordInput(
+                                      controller: remdp,
+                                      color: Theme.of(context).primaryColor),
+
                                   // inputField(
                                   //     remdp,
                                   //     "Confirmation de votre mot de passe:",

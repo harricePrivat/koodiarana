@@ -6,7 +6,8 @@ import 'package:form_builder_validators/form_builder_validators.dart';
 // ignore: must_be_immutable
 class PasswordInput extends StatefulWidget {
   TextEditingController controller;
-  PasswordInput({super.key, required this.controller});
+  Color color;
+  PasswordInput({super.key, required this.controller, required this.color});
 
   @override
   State<PasswordInput> createState() => _PasswordInputState();
@@ -25,17 +26,16 @@ class _PasswordInputState extends State<PasswordInput> {
       // placeholder: const Text('*******'),
       obscureText: obscure,
       decoration: InputDecoration(
-        label:
-            const Text('Mot de passe', style: TextStyle(color: Colors.white)),
+        label: Text('Mot de passe', style: TextStyle(color: widget.color)),
         border: const OutlineInputBorder(
             borderRadius: BorderRadius.all(Radius.circular(8))),
         hintText: '*******',
-        prefix: const Padding(
-          padding: EdgeInsets.all(4.0),
+        prefix: Padding(
+          padding: const EdgeInsets.all(4.0),
           child: ShadImage.square(
             size: 16,
             LucideIcons.lock,
-            color: Colors.white,
+            color: widget.color,
           ),
         ),
         suffix: ShadButton(
