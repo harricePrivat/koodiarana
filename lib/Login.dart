@@ -1,6 +1,8 @@
 import 'dart:async';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_form_builder/flutter_form_builder.dart';
+import 'package:form_builder_validators/form_builder_validators.dart';
 import 'package:koodiarana/Provider.dart';
 import 'package:koodiarana/ToQuit.dart';
 import 'package:koodiarana/addAccountCustomer.dart';
@@ -251,18 +253,25 @@ class _Login extends State<Login> with SingleTickerProviderStateMixin {
             child: Column(
               mainAxisSize: MainAxisSize.min,
               children: [
-                const SizedBox(height: 16),
-                ShadInputFormField(
+                const SizedBox(height: 14),
+                FormBuilderTextField(
                   controller: mailNum,
-                  cursorColor: Colors.white,
-                  style: style,
-                  label: Text('Mail ou Num', style: style),
-                  placeholder: Text(
-                    'ex: @gmail.com ou 034...',
-                    style: style,
+                  name: "mailNum",
+                  autovalidateMode: AutovalidateMode.onUserInteraction,
+                  decoration: const InputDecoration(
+                    label: Text('Mail ou Numero de telephone',
+                        style: TextStyle(color: Colors.white)),
+                    border: OutlineInputBorder(
+                      borderRadius: BorderRadius.all(Radius.circular(8.00)),
+                    ),
+                    hintText: "...@gmail.com ou +261....",
                   ),
+                  validator: FormBuilderValidators.compose([
+                    FormBuilderValidators.required(
+                        errorText: "Ce champ  est obligatoire")
+                  ]),
                 ),
-                const SizedBox(height: 8),
+                const SizedBox(height: 16),
                 PasswordInput(controller: password),
                 const SizedBox(height: 16),
               ],
@@ -310,7 +319,7 @@ class _Login extends State<Login> with SingleTickerProviderStateMixin {
               ),
             ),
             const SizedBox(
-              height: 8.00,
+              height: 7.00,
             ),
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,

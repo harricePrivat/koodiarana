@@ -5,13 +5,14 @@ import 'package:koodiarana/Provider.dart';
 import 'package:koodiarana/check_verify_mail.dart';
 import 'package:koodiarana/delayed_animation.dart';
 import 'package:koodiarana/send_data.dart';
-import 'package:koodiarana/services/verify_mail.dart';
 import 'package:koodiarana/shadcn/DatePicker.dart';
 import 'package:koodiarana/shadcn/PasswordInput.dart';
 import 'package:koodiarana/shadcn/phoneNumber.dart';
 import 'package:provider/provider.dart';
 import 'package:shadcn_flutter/shadcn_flutter.dart' as shadcn_flutter;
 import 'dart:convert';
+import 'package:flutter_form_builder/flutter_form_builder.dart';
+import 'package:form_builder_validators/form_builder_validators.dart';
 
 class AddaccountCustomer extends StatefulWidget {
   const AddaccountCustomer({super.key});
@@ -30,7 +31,6 @@ class _AddaccountState extends State<AddaccountCustomer>
   TextEditingController mdp = TextEditingController();
   shadcn_flutter.PhoneNumber? phoneNumber;
   SendData sendData = SendData();
-  VerifyMail verifyMail = VerifyMail();
 
   @override
   void initState() {
@@ -149,13 +149,32 @@ class _AddaccountState extends State<AddaccountCustomer>
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
                                   const Text('Votre adrresse e-mail:'),
-                                  shadcn_flutter.TextField(
+                                  // shadcn_flutter.TextField(
+                                  //   controller: email,
+                                  //   useNativeContextMenu: true,
+                                  //   placeholder: '@gmail.com',
+                                  //   style:
+                                  //       shadcn_flutter.TextStyle(color: color),
+                                  // ),final _formKey = GlobalKey<FormBuilderState>();
+
+                                  FormBuilderTextField(
                                     controller: email,
-                                    useNativeContextMenu: true,
-                                    placeholder: '@gmail.com',
-                                    style:
-                                        shadcn_flutter.TextStyle(color: color),
+                                    name: 'email',
+                                    decoration: const InputDecoration(
+                                      labelText: 'Email',
+                                    ),
+                                    autovalidateMode:
+                                        AutovalidateMode.onUserInteraction,
+                                    validator: FormBuilderValidators.compose([
+                                      FormBuilderValidators.required(
+                                          errorText:
+                                              'Ce champ est obligatoire.'),
+                                      FormBuilderValidators.email(
+                                          errorText:
+                                              'Veuillez entrer un email valide.'),
+                                    ]),
                                   ),
+
                                   const SizedBox(
                                     height: 16.00,
                                   ),
