@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:koodiarana/Provider.dart';
+import 'package:koodiarana/services/Provider.dart';
 import 'package:koodiarana/delayed_animation.dart';
 import 'package:provider/provider.dart';
 

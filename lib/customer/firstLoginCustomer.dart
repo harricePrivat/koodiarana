@@ -1,18 +1,23 @@
 import 'package:flutter/material.dart';
-import 'package:koodiarana/Provider.dart';
+import 'package:koodiarana/services/Provider.dart';
 import 'package:koodiarana/delayed_animation.dart';
-import 'package:provider/provider.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
+import 'package:provider/provider.dart';
 
-class FirstLoginWork extends StatefulWidget {
-  const FirstLoginWork({super.key});
+class FirstLoginCustomer extends StatefulWidget {
+  const FirstLoginCustomer({super.key});
 
   @override
-  State<FirstLoginWork> createState() => _FirstLoginWork();
+  State<FirstLoginCustomer> createState() => _FirstLoginWork();
 }
 
-class _FirstLoginWork extends State<FirstLoginWork> {
+class _FirstLoginWork extends State<FirstLoginCustomer> {
   final controller = PageController();
+  @override
+  void initState() {
+    super.initState();
+  }
+
   // final Color rwColor = const Color(Colors.white);
 
   @override
@@ -48,9 +53,10 @@ class _FirstLoginWork extends State<FirstLoginWork> {
         DelayedAnimation(
           delay: 1300,
           child: MaterialButton(
-            child: const Text('Suivant'),
+            child: const Text('Skip'),
             onPressed: () {
-              Provider.of<ManageLogin>(context, listen: false).tipsDoneWork();
+              Provider.of<ManageLogin>(context, listen: false)
+                  .tipsDoneCustomer();
             },
           ),
         )
@@ -65,10 +71,13 @@ class _FirstLoginWork extends State<FirstLoginWork> {
 
   Widget buildPages() {
     return PageView(
+      //  physics: NeverS,
       controller: controller,
       children: [
-        onboardPageView(const AssetImage('assets/Logo_koodiarana.png'),
-            'Je suis votre employer'),
+        onboardPageView(
+          const AssetImage('assets/Logo_koodiarana.png'),
+          '''Je suis votre client''',
+        ),
         onboardPageView(
           const AssetImage('assets/Logo_koodiarana.png'),
           'Cook with step by step instructions!',

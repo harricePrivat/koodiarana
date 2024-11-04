@@ -1,13 +1,13 @@
 import 'package:go_router/go_router.dart';
-import 'package:koodiarana/AccueilCustomer.dart';
+import 'package:koodiarana/customer/AccueilCustomer.dart';
 import 'package:koodiarana/MessageEvolution.dart';
-import 'package:koodiarana/AccueilWork.dart';
-import 'package:koodiarana/firstLoginCustomer.dart';
-import '../Provider.dart';
+import 'package:koodiarana/work/AccueilWork.dart';
+import 'package:koodiarana/customer/firstLoginCustomer.dart';
+import 'Provider.dart';
 import '../Login.dart';
 import 'package:provider/provider.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:koodiarana/firstLoginWork.dart';
+import '../../work/firstLoginWork.dart';
 
 class KoodiaranaRouter {
   final BottomTabManager bottomTabManager;

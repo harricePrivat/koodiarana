@@ -2,8 +2,8 @@ import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
-import 'package:koodiarana/Provider.dart';
-import 'package:koodiarana/send_data.dart';
+import 'package:koodiarana/services/Provider.dart';
+import 'package:koodiarana/services/send_data.dart';
 import 'package:provider/provider.dart';
 import 'package:shadcn_ui/shadcn_ui.dart';
 

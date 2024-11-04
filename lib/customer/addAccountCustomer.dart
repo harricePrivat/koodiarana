@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:koodiarana/Models/model_user.dart';
-import 'package:koodiarana/Provider.dart';
-import 'package:koodiarana/check_verify_mail.dart';
+import 'package:koodiarana/services/Provider.dart';
+import 'package:koodiarana/services/check_verify_mail.dart';
 import 'package:koodiarana/delayed_animation.dart';
-import 'package:koodiarana/send_data.dart';
+import 'package:koodiarana/services/send_data.dart';
 import 'package:koodiarana/shadcn/DatePicker.dart';
 import 'package:koodiarana/shadcn/PasswordInput.dart';
 import 'package:koodiarana/shadcn/phoneNumber.dart';

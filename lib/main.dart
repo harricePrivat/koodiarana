@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 // import 'package:shadcn_flutter/shadcn_flutter.dart' as shadcn_flutter;
 import 'theme.dart';
 import 'package:firebase_core/firebase_core.dart';
-import 'package:koodiarana/Provider.dart';
+import 'package:koodiarana/services/Provider.dart';
 import 'package:koodiarana/services/authentification.dart';
 import 'package:provider/provider.dart';
 import 'services/KoodiaranaRouter.dart';

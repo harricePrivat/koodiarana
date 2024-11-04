@@ -3,12 +3,12 @@ import 'package:koodiarana/Animation.dart';
 import 'package:koodiarana/MentionLegale.dart';
 //import 'package:go_router/go_router.dart';
 //import 'package:koodiarana/Parametres.dart';
-import 'package:koodiarana/Provider.dart';
+import 'package:koodiarana/services/Provider.dart';
 import 'package:koodiarana/confidetialite.dart';
 import 'package:koodiarana/delayed_animation.dart';
 import 'package:koodiarana/historique.dart';
-import 'manageAccount/manageAccount.dart';
-import 'MessageEvolution.dart';
+import '../manageAccount/manageAccount.dart';
+import '../MessageEvolution.dart';
 
 //import 'package:koodiarana/services/authentification.dart';
 import 'package:provider/provider.dart';

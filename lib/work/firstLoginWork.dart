@@ -1,23 +1,18 @@
 import 'package:flutter/material.dart';
-import 'package:koodiarana/Provider.dart';
+import 'package:koodiarana/services/Provider.dart';
 import 'package:koodiarana/delayed_animation.dart';
-import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 import 'package:provider/provider.dart';
+import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 
-class FirstLoginCustomer extends StatefulWidget {
-  const FirstLoginCustomer({super.key});
+class FirstLoginWork extends StatefulWidget {
+  const FirstLoginWork({super.key});
 
   @override
-  State<FirstLoginCustomer> createState() => _FirstLoginWork();
+  State<FirstLoginWork> createState() => _FirstLoginWork();
 }
 
-class _FirstLoginWork extends State<FirstLoginCustomer> {
+class _FirstLoginWork extends State<FirstLoginWork> {
   final controller = PageController();
-  @override
-  void initState() {
-    super.initState();
-  }
-
   // final Color rwColor = const Color(Colors.white);
 
   @override
@@ -53,10 +48,9 @@ class _FirstLoginWork extends State<FirstLoginCustomer> {
         DelayedAnimation(
           delay: 1300,
           child: MaterialButton(
-            child: const Text('Skip'),
+            child: const Text('Suivant'),
             onPressed: () {
-              Provider.of<ManageLogin>(context, listen: false)
-                  .tipsDoneCustomer();
+              Provider.of<ManageLogin>(context, listen: false).tipsDoneWork();
             },
           ),
         )
@@ -71,13 +65,10 @@ class _FirstLoginWork extends State<FirstLoginCustomer> {
 
   Widget buildPages() {
     return PageView(
-      //  physics: NeverS,
       controller: controller,
       children: [
-        onboardPageView(
-          const AssetImage('assets/Logo_koodiarana.png'),
-          '''Je suis votre client''',
-        ),
+        onboardPageView(const AssetImage('assets/Logo_koodiarana.png'),
+            'Je suis votre employer'),
         onboardPageView(
           const AssetImage('assets/Logo_koodiarana.png'),
           'Cook with step by step instructions!',

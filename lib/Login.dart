@@ -3,11 +3,11 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:form_builder_validators/form_builder_validators.dart';
-import 'package:koodiarana/Provider.dart';
-import 'package:koodiarana/ToQuit.dart';
-import 'package:koodiarana/addAccountCustomer.dart';
+import 'package:koodiarana/services/Provider.dart';
+//import 'package:koodiarana/ToQuit.dart';
+import 'package:koodiarana/customer/addAccountCustomer.dart';
 import 'package:koodiarana/forgot_password.dart';
-import 'package:koodiarana/send_data.dart';
+import 'package:koodiarana/services/send_data.dart';
 import 'package:koodiarana/services/authentification.dart';
 import 'package:koodiarana/shadcn/PasswordInput.dart';
 import 'package:provider/provider.dart';
@@ -17,7 +17,7 @@ import 'package:fluttertoast/fluttertoast.dart';
 import 'package:shadcn_ui/shadcn_ui.dart';
 import 'package:flutter/services.dart';
 import 'delayed_animation.dart';
-import 'addAccountWork.dart';
+import 'work/addAccountWork.dart';
 
 class Login extends StatefulWidget {
   const Login({super.key});
@@ -70,8 +70,7 @@ class _Login extends State<Login> with SingleTickerProviderStateMixin {
   @override
   Widget build(BuildContext context) {
     Provider.of<ManageLogin>(context).initializeApp();
-    return ToQuit(
-        child: Scaffold(
+    return Scaffold(
       resizeToAvoidBottomInset: true,
       appBar: AppBar(
         title: const Text(
@@ -178,7 +177,7 @@ class _Login extends State<Login> with SingleTickerProviderStateMixin {
           ),
         ],
       ),
-    ));
+    );
   }
 
   signInWork() async {

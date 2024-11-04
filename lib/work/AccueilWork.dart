@@ -1,47 +1,33 @@
 import 'dart:async';
-
 import 'package:flutter/material.dart';
 import 'package:connectivity_plus/connectivity_plus.dart';
-//import 'package:shadcn_ui/shadcn_ui.dart';
-import 'package:koodiarana/Page1.dart';
-import 'package:koodiarana/Page2.dart';
-import 'package:koodiarana/Page3.dart';
-import 'package:koodiarana/Page4.dart';
-import 'package:koodiarana/Provider.dart';
-import 'package:shadcn_flutter/shadcn_flutter.dart' as shadcn_flutter;
+import 'PageWork1.dart';
+import 'package:koodiarana/work/PageWork2.dart';
+import 'package:koodiarana/services/Provider.dart';
 import 'package:provider/provider.dart';
+import 'package:shadcn_flutter/shadcn_flutter.dart' as shadcn_flutter;
 
-class Accueil extends StatefulWidget {
-  const Accueil({super.key});
+class AccueilWork extends StatefulWidget {
+  const AccueilWork({super.key});
   @override
-  State<Accueil> createState() => _Accueil();
+  State<AccueilWork> createState() => _Accueil();
 }
 
-class _Accueil extends State<Accueil> {
+class _Accueil extends State<AccueilWork> {
 //  int currentIndex = 0;
   late StreamSubscription<List<ConnectivityResult>> subscription;
   String connectionStatus = 'Unknow';
   String noConnexion = "Pas de connexion internet";
   String connexion = "Connexion internet restaure";
   bool? connex;
-  List<Widget> listWidget = [
-    const Page1(),
-    const Page2(),
-    const Page3(),
-    const Page4()
-  ];
+
+  List<Widget> listWidget = [const PageWork1(), const PageWork2()];
 
   void connectivitySnackBar(Widget message) {
     // ScaffoldMessenger.of(context).showSnackBar(SnackBar(
     //   content: message,
     //   duration: const Duration(seconds: 3),
     // ));
-    // ShadToaster.of(context).show(
-    //   ShadToast(
-    //     description: message,
-    //     duration: const Duration(seconds: 5),
-    //   ),
-    // );
     shadcn_flutter.showToast(
         context: context,
         showDuration: const Duration(milliseconds: 3000),
@@ -92,30 +78,29 @@ class _Accueil extends State<Accueil> {
     );
   }
 
+  Widget checkConnexion(List<ConnectivityResult> result) {
+    if (result.contains(ConnectivityResult.none)) {
+      connex = false;
+      return const Text('Pas de connexion Internet');
+    } else {
+      connex = true;
+      return const Text('Bonne Connexion Internet ');
+    }
+  }
+
   @override
   void initState() {
     super.initState();
     subscription = Connectivity()
         .onConnectivityChanged
         .listen((List<ConnectivityResult> result) {
+      // Received changes in available connectivity types!
+      // checkConnectivity();
       setState(() {
-        //   Provider.of<ManageLogin>(context, listen: true).setConnectivity(result);
+        //connectionStatus = (String)checkConnectivity(result.toString());
         connectivitySnackBar(checkConnexion(result));
-        Provider.of<ManageLogin>(context, listen: false)
-            .setConnectivity(result);
-        print('Changement');
       });
     });
-  }
-
-  Widget checkConnexion(List<ConnectivityResult> result) {
-    if (result.contains(ConnectivityResult.none)) {
-      connex = false;
-      return Text(noConnexion);
-    } else {
-      connex = true;
-      return Text(connexion);
-    }
   }
 
   @override
@@ -126,12 +111,8 @@ class _Accueil extends State<Accueil> {
 
   @override
   Widget build(BuildContext context) {
-    return Consumer<BottomTabManager>(
+    return Consumer<BottomWork>(
       builder: (context, tabManager, child) {
-        void onTapped(value) {
-          tabManager.changeTab(value);
-        }
-
         return Scaffold(
           backgroundColor: const Color.fromARGB(240, 255, 255, 255),
           body: AnimatedSwitcher(
@@ -142,34 +123,26 @@ class _Accueil extends State<Accueil> {
                 child: child,
               );
             },
-            child: listWidget[tabManager.tabManager],
+            child: listWidget[tabManager.index],
           ),
           bottomNavigationBar: BottomNavigationBar(
-            showSelectedLabels: true,
-            showUnselectedLabels: true,
-            unselectedItemColor: Colors.grey,
-            unselectedLabelStyle: const TextStyle(color: Colors.grey),
-            currentIndex: tabManager.tabManager,
-            onTap: onTapped,
-            items: const [
-              BottomNavigationBarItem(
-                icon: Icon(Icons.home_outlined),
-                label: 'Accueil',
-              ),
-              BottomNavigationBarItem(
-                icon: Icon(Icons.map),
-                label: 'Maps',
-              ),
-              BottomNavigationBarItem(
-                icon: Icon(Icons.add_task),
-                label: 'Activité',
-              ),
-              BottomNavigationBarItem(
-                icon: Icon(Icons.person),
-                label: 'Compte',
-              ),
-            ],
-          ),
+              showSelectedLabels: true,
+              showUnselectedLabels: true,
+              //   selectedItemColor: Colors.black,
+              unselectedItemColor: Colors.grey,
+              unselectedLabelStyle: const TextStyle(color: Colors.grey),
+              currentIndex: tabManager.index,
+              //  selectedLabelStyle: const TextStyle(color: Colors.black),
+              onTap: (value) {
+                tabManager.changeTab(value);
+                //  print('Voici currentIndex:$tabManager.tabMan');
+              },
+              items: const [
+                BottomNavigationBarItem(
+                    icon: Icon(Icons.motorcycle), label: 'Acitivite'),
+                BottomNavigationBarItem(
+                    icon: Icon(Icons.person), label: 'Compte')
+              ]),
         );
       },
     );

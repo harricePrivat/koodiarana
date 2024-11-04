@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:koodiarana/Models/model_user.dart';
-import 'Models/ModelKoodiarana.dart';
-import 'services/appCache.dart';
+import '../Models/ModelKoodiarana.dart';
+import 'appCache.dart';
 import 'package:connectivity_plus/connectivity_plus.dart';
 
 class BottomTabManager extends ChangeNotifier {

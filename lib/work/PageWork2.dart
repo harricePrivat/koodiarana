@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 //import 'package:koodiarana/Parametres.dart';
-import 'package:koodiarana/Provider.dart';
+import 'package:koodiarana/services/Provider.dart';
 import 'package:koodiarana/delayed_animation.dart';
 import 'package:koodiarana/manageAccount/manageAccount.dart';
-import 'MessageEvolution.dart';
+import '../MessageEvolution.dart';
 
 //import 'package:koodiarana/services/authentification.dart';
 import 'package:provider/provider.dart';
