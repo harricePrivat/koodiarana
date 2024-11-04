@@ -6,6 +6,9 @@ import 'package:koodiarana/work/PageWork2.dart';
 import 'package:koodiarana/services/Provider.dart';
 import 'package:provider/provider.dart';
 import 'package:shadcn_flutter/shadcn_flutter.dart' as shadcn_flutter;
+import 'package:geolocator/geolocator.dart';
+import 'package:web_socket_channel/web_socket_channel.dart';
+import 'dart:convert';
 
 class AccueilWork extends StatefulWidget {
   const AccueilWork({super.key});
@@ -15,23 +18,36 @@ class AccueilWork extends StatefulWidget {
 
 class _Accueil extends State<AccueilWork> {
 //  int currentIndex = 0;
+  WebSocketChannel ws =
+      WebSocketChannel.connect(Uri.parse("ws://192.168.1.155:9999/position"));
   late StreamSubscription<List<ConnectivityResult>> subscription;
   String connectionStatus = 'Unknow';
   String noConnexion = "Pas de connexion internet";
   String connexion = "Connexion internet restaure";
   bool? connex;
-
+  Position? _currentPosition;
   List<Widget> listWidget = [const PageWork1(), const PageWork2()];
 
   void connectivitySnackBar(Widget message) {
-    // ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-    //   content: message,
-    //   duration: const Duration(seconds: 3),
-    // ));
     shadcn_flutter.showToast(
         context: context,
         showDuration: const Duration(milliseconds: 3000),
         builder: buildToast);
+  }
+
+  void listeningPosition() {
+    const locationSettings =
+        LocationSettings(accuracy: LocationAccuracy.best, distanceFilter: 3);
+    Geolocator.getPositionStream(locationSettings: locationSettings)
+        .listen((position) {
+      _currentPosition = position;
+      final data = {
+        "longitude": _currentPosition!.longitude.toString(),
+        "latitude": _currentPosition!.latitude.toString()
+      };
+      ws.sink.add(jsonEncode(data));
+      print(data);
+    });
   }
 
   Widget buildToast(
@@ -91,6 +107,7 @@ class _Accueil extends State<AccueilWork> {
   @override
   void initState() {
     super.initState();
+    listeningPosition();
     subscription = Connectivity()
         .onConnectivityChanged
         .listen((List<ConnectivityResult> result) {

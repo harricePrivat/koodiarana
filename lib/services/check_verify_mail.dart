@@ -39,7 +39,7 @@ class _CheckVerifyMailState extends State<CheckVerifyMail> {
                         .getUser();
                     SendData sendData = SendData();
                     final response = await sendData.goData(
-                        "http://192.168.43.41:9999/check-confirm",
+                        "http://192.168.1.155:9999/check-confirm",
                         user.toJson());
                     if (response.statusCode == 200) {
                       final body = jsonDecode(response.body);
