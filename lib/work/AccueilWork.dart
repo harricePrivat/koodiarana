@@ -9,6 +9,7 @@ import 'package:shadcn_flutter/shadcn_flutter.dart' as shadcn_flutter;
 import 'package:geolocator/geolocator.dart';
 import 'package:web_socket_channel/web_socket_channel.dart';
 import 'dart:convert';
+import 'package:firebase_auth/firebase_auth.dart';
 
 class AccueilWork extends StatefulWidget {
   const AccueilWork({super.key});
@@ -27,7 +28,6 @@ class _Accueil extends State<AccueilWork> {
   bool? connex;
   Position? _currentPosition;
   List<Widget> listWidget = [const PageWork1(), const PageWork2()];
-
   void connectivitySnackBar(Widget message) {
     shadcn_flutter.showToast(
         context: context,
@@ -35,19 +35,27 @@ class _Accueil extends State<AccueilWork> {
         builder: buildToast);
   }
 
-  void listeningPosition() {
+  void listeningPosition(User user) {
     const locationSettings =
         LocationSettings(accuracy: LocationAccuracy.best, distanceFilter: 3);
     Geolocator.getPositionStream(locationSettings: locationSettings)
         .listen((position) {
       _currentPosition = position;
       final data = {
+        "mail": user.email,
         "longitude": _currentPosition!.longitude.toString(),
         "latitude": _currentPosition!.latitude.toString()
       };
       ws.sink.add(jsonEncode(data));
       print(data);
     });
+  }
+
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    final user = Provider.of<User>(context);
+    listeningPosition(user);
   }
 
   Widget buildToast(
@@ -107,7 +115,8 @@ class _Accueil extends State<AccueilWork> {
   @override
   void initState() {
     super.initState();
-    listeningPosition();
+    // final user = Provider.of<User>(context);
+
     subscription = Connectivity()
         .onConnectivityChanged
         .listen((List<ConnectivityResult> result) {
