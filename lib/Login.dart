@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:form_builder_validators/form_builder_validators.dart';
 import 'package:koodiarana/services/Provider.dart';
@@ -222,7 +223,7 @@ class _Login extends State<Login> with SingleTickerProviderStateMixin {
                   onPressed: () async {
                     SendData sendData = SendData();
                     final response = await sendData.goData(
-                        'http://192.168.43.41:9999/login',
+                        '${dotenv.env['URL']}/login',
                         {'mailNum': mailNum.text, 'mdp': password.text});
                     if (response.statusCode == 200) {
                       print(response.body);

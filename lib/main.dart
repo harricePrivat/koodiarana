@@ -9,8 +9,9 @@ import 'services/KoodiaranaRouter.dart';
 import 'package:flutter/services.dart';
 import 'package:shadcn_flutter/shadcn_flutter.dart' as shadcn_flutter;
 import 'package:shadcn_ui/shadcn_ui.dart';
-
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 void main() async {
+  await dotenv.load(fileName: '.env');
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
   SystemChrome.setPreferredOrientations(

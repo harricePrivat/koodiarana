@@ -36,6 +36,7 @@ dependencies:
   flutter_form_builder: ^9.5.0
   form_builder_validators: ^11.0.0
   web_socket_channel: ^3.0.1
+  flutter_dotenv: ^5.2.1
 
 dev_dependencies:
   flutter_test:
@@ -53,6 +54,7 @@ flutter:
   uses-material-design: true
 
   assets:
+    - .env
     - assets/logo.jpeg
     - assets/Logo_koodiarana.png
     - assets/Accueil.jpeg

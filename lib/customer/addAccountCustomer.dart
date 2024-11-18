@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:koodiarana/Models/model_user.dart';
 import 'package:koodiarana/services/Provider.dart';
@@ -164,10 +165,12 @@ class _AddaccountState extends State<AddaccountCustomer>
                                   // ),final _formKey = GlobalKey<FormBuilderState>();
 
                                   FormBuilderTextField(
+                                    
                                     controller: email,
                                     name: 'email',
                                     decoration: const InputDecoration(
                                       labelText: 'Email',
+                                      border: OutlineInputBorder()
                                     ),
                                     autovalidateMode:
                                         AutovalidateMode.onUserInteraction,
@@ -229,7 +232,7 @@ class _AddaccountState extends State<AddaccountCustomer>
                                                 listen: false)
                                             .setUser(user);
                                         final response = await sendData.goData(
-                                            "http://192.168.1.155:9999/verify-mail-account",
+                                            "${dotenv.env['URL']}/verify-mail-account",
                                             user.toJson());
                                         if (response.statusCode == 200) {
                                           final body =
