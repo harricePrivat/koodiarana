@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
+import 'package:fluttertoast/fluttertoast.dart';
+import 'package:koodiarana/services/send_data.dart';
 import 'package:shadcn_ui/shadcn_ui.dart';
-
+import 'dart:convert';
 import 'shadcn/PasswordInput.dart';
 
 class ChangePassword extends StatefulWidget {
@@ -45,7 +48,26 @@ class _ChangePasswordState extends State<ChangePassword> {
                   ),
                   ShadButton(
                     child: const Text("Changer le mot de passe"),
-                    onPressed: () {},
+                    onPressed: () async {
+                      if (remdp.text == mdp.text) {
+                        final response = await SendData().goData(
+                            "${dotenv.env['URL']}/changePassword",
+                            {"mail": widget.email, "newMdp": mdp.text});
+                        if (response.statusCode == 200) {
+                          final object = jsonDecode(response.body);
+                          if (object['message'] == "OK") {
+                            Fluttertoast.showToast(
+                                msg: 'Votre mot de passe a bien ete change',
+                                toastLength: Toast.LENGTH_LONG);
+                            Navigator.pop(context);
+                          } else {
+                            Fluttertoast.showToast(
+                                msg: 'Erreur de connexion',
+                                toastLength: Toast.LENGTH_LONG);
+                          }
+                        }
+                      }
+                    },
                   ),
                 ],
               )
