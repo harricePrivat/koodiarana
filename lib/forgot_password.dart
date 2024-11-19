@@ -1,7 +1,13 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:form_builder_validators/form_builder_validators.dart';
+import 'package:koodiarana/services/send_data.dart';
+import 'package:koodiarana/verify_otp.dart';
 import 'package:shadcn_ui/shadcn_ui.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:shadcn_flutter/shadcn_flutter.dart' as shadcn_flutter;
 
 class ForgotPassword extends StatefulWidget {
@@ -13,6 +19,7 @@ class ForgotPassword extends StatefulWidget {
 
 class _ForgotPasswordState extends State<ForgotPassword> {
   shadcn_flutter.PhoneNumber? phoneNumber;
+  TextEditingController mdp =TextEditingController();
   @override
   Widget build(BuildContext context) {
     final themeText = Theme.of(context).textTheme;
@@ -59,7 +66,21 @@ class _ForgotPasswordState extends State<ForgotPassword> {
                 const SizedBox(
                   height: 16.00,
                 ),
-                const ShadButton(child: Text("Recuperer votre compte")),
+                 ShadButton(child: const Text("Recuperer votre compte",),onPressed: ()async{
+                  final response= await SendData().goData("${dotenv.env['URL']}/send-mail-mdp/", 
+                  {
+                    "message": mdp.text
+                  });
+                  if(response.statusCode==200){
+                    final object = jsonDecode(response.body);
+                    if(object['message']=='ok'){
+                      Navigator.push(context, MaterialPageRoute(builder: (context)=>  VerifyOtp(email: mdp.text,)));
+                    }else{
+                      Fluttertoast.showToast(msg: "Erreur de connexion",toastLength: Toast.LENGTH_SHORT);
+                    }
+
+                  }
+                 },),
               ],
             ),
           )
