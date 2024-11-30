@@ -37,6 +37,8 @@ dependencies:
   form_builder_validators: ^11.0.0
   web_socket_channel: ^3.0.1
   flutter_dotenv: ^5.2.1
+  flutter_bloc: ^8.1.6
+  equatable: ^2.0.7
 
 dev_dependencies:
   flutter_test:
