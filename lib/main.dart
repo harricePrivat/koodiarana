@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:koodiarana/bloc/login_bloc/login_bloc.dart';
 // import 'package:shadcn_flutter/shadcn_flutter.dart' as shadcn_flutter;
 import 'theme.dart';
 import 'package:firebase_core/firebase_core.dart';
@@ -10,6 +12,7 @@ import 'package:flutter/services.dart';
 import 'package:shadcn_flutter/shadcn_flutter.dart' as shadcn_flutter;
 import 'package:shadcn_ui/shadcn_ui.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
+
 void main() async {
   await dotenv.load(fileName: '.env');
   WidgetsFlutterBinding.ensureInitialized();
@@ -47,15 +50,18 @@ class Main extends StatelessWidget {
         //     colorScheme: shadcn_flutter.ColorSchemes.darkZinc(),
         //     radius: 0.5,
         //   ),
-        child: shadcn_flutter.ShadcnApp(
-          debugShowCheckedModeBanner: false,
-          theme: shadcn_flutter.ThemeData(
-              colorScheme: shadcn_flutter.ColorSchemes.darkZinc(), radius: 0.5),
-          home: const ShadApp(
-            debugShowCheckedModeBanner: false,
-            home: SplashScreen(),
-          ),
-        ));
+        child: MultiBlocProvider(
+            providers: [BlocProvider(create: (context) => LoginBloc())],
+            child: shadcn_flutter.ShadcnApp(
+              debugShowCheckedModeBanner: false,
+              theme: shadcn_flutter.ThemeData(
+                  colorScheme: shadcn_flutter.ColorSchemes.darkZinc(),
+                  radius: 0.5),
+              home: const ShadApp(
+                debugShowCheckedModeBanner: false,
+                home: SplashScreen(),
+              ),
+            )));
   }
 }
 
